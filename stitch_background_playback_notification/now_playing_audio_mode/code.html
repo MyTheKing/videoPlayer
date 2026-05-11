@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>音乐播放器界面</title>
+<!-- BEGIN: Tailwind CSS with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- END: Tailwind CSS with Plugins -->
+<!-- BEGIN: Typography and Base Styles -->
+<style data-purpose="typography">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+    body {
+      font-family: 'Inter', 'Noto Sans SC', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+<!-- END: Typography and Base Styles -->
+<!-- BEGIN: Animation Styles -->
+<style data-purpose="animations">
+    @keyframes slow-rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .rotate-slow {
+      animation: slow-rotate 20s linear infinite;
+    }
+    .rotate-paused {
+      animation-play-state: paused;
+    }
+  </style>
+<!-- END: Animation Styles -->
+<!-- BEGIN: Custom Accents -->
+<style data-purpose="accents">
+    .accent-gradient {
+      background: linear-gradient(135deg, #4ade80 0%, #3b82f6 100%);
+    }
+    .accent-text {
+      color: #3b82f6;
+    }
+    .progress-thumb::-webkit-slider-thumb {
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      background: #3b82f6;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  </style>
+<!-- END: Custom Accents -->
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col items-center justify-between p-6">
+<!-- BEGIN: MainHeader -->
+<header class="w-full flex justify-between items-center mb-8" data-purpose="header">
+<button aria-label="最小化" class="p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors">
+<svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<div class="text-center">
+<p class="text-[10px] uppercase tracking-widest font-bold text-slate-400">正在播放</p>
+<p class="text-xs font-semibold text-slate-600">视频合集</p>
+</div>
+<button aria-label="更多选项" class="p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors">
+<svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: PlayerContainer -->
+<main class="flex-1 w-full max-w-sm flex flex-col items-center justify-center space-y-10" data-purpose="player-container">
+<!-- Rotating Album Art -->
+<div class="relative group" data-purpose="album-art-wrapper">
+<div class="w-64 h-64 md:w-72 md:h-72 rounded-full shadow-2xl overflow-hidden border-4 border-white rotate-slow" id="albumArtContainer">
+<img alt="视频缩略图" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBL6xXxmEL-b1Lgg2qZK8poAIqCws_b-H2YA9x1JO00iKnSmxnkipu5RWG1SsRLZiNPbt4FTHe2QzfOopF8cDy4m7diftFIkdvEN3z5JvIfok38s6suMP7A4eTdTyL15HdtXbiKSpuzCZ3f6PdU8XJNxdn5mTQBHpMWPSB9JgTonN9eCFhDzJY2c4K_k_vByvggH6wQ5XxHHEQCxCPcsEg5LuuoIEp2MzDCaDhNksdxwyJSRy-qIFvBgux1mfo9tEqF1XtVhcBLHks"/>
+</div>
+<!-- Center Hole Decor -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-slate-50 rounded-full shadow-inner border border-slate-200"></div>
+</div>
+<!-- Metadata Section -->
+<div class="text-center space-y-2 w-full" data-purpose="track-info">
+<h1 class="text-2xl font-bold text-slate-800 truncate px-4">日落倒影 - 航拍电影感</h1>
+<p class="text-slate-500 font-medium">2024 夏日氛围 / 旅行短片</p>
+</div>
+<!-- Progress Controls -->
+<div class="w-full px-2" data-purpose="playback-progress">
+<input class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-500 progress-thumb" id="progressBar" max="100" min="0" type="range" value="35"/>
+<div class="flex justify-between mt-3 text-[10px] font-bold text-slate-400 tabular-nums">
+<span>01:14</span>
+<span>03:45</span>
+</div>
+</div>
+<!-- Main Playback Controls -->
+<div class="w-full flex items-center justify-between px-4" data-purpose="playback-controls">
+<button class="text-slate-400 hover:text-blue-500 transition-colors" title="随机播放">
+<svg fill="none" height="20" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<div class="flex items-center space-x-8">
+<button class="text-slate-700 hover:text-blue-600 transition-transform active:scale-95" title="上一首">
+<svg fill="currentColor" height="32" viewbox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 6h2v12H6V6zm3.5 6l8.5 6V6l-8.5 6z"></path>
+</svg>
+</button>
+<button class="w-16 h-16 accent-gradient text-white rounded-full shadow-lg shadow-blue-200 flex items-center justify-center transition-transform active:scale-90" id="playPauseBtn" title="播放/暂停">
+<svg class="hidden" fill="currentColor" height="32" id="playIcon" viewbox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 5v14l11-7z"></path>
+</svg>
+<svg fill="currentColor" height="32" id="pauseIcon" viewbox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
+</svg>
+</button>
+<button class="text-slate-700 hover:text-blue-600 transition-transform active:scale-95" title="下一首">
+<svg fill="currentColor" height="32" viewbox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"></path>
+</svg>
+</button>
+</div>
+<button class="text-blue-500" title="单曲循环">
+<svg fill="none" height="20" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</main>
+<!-- END: PlayerContainer -->
+<!-- BEGIN: BottomNavigation -->
+<footer class="w-full flex justify-center pb-8" data-purpose="footer-nav">
+<button class="flex items-center space-x-2 px-8 py-3 bg-white border border-slate-200 rounded-full shadow-sm hover:shadow-md transition-all text-slate-600 font-semibold group active:scale-95" data-purpose="switch-mode-button">
+<svg class="w-5 h-5 text-blue-500 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span>切换到视频模式</span>
+</button>
+</footer>
+<!-- END: BottomNavigation -->
+<!-- BEGIN: Interactive Logic -->
+<script data-purpose="event-handlers">
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const albumArt = document.getElementById('albumArtContainer');
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    let isPlaying = true;
+
+    playPauseBtn.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      if (isPlaying) {
+        albumArt.classList.remove('rotate-paused');
+        playIcon.classList.add('hidden');
+        pauseIcon.classList.remove('hidden');
+      } else {
+        albumArt.classList.add('rotate-paused');
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+      }
+    });
+
+    // Mock progress update
+    const progressBar = document.getElementById('progressBar');
+    progressBar.addEventListener('input', (e) => {
+      // Logic for seeking through video
+      console.log(`正在跳转至: ${e.target.value}%`);
+    });
+  </script>
+<!-- END: Interactive Logic -->
+</body></html>

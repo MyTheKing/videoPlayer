@@ -7,9 +7,55 @@
     <string name="notification_channel_media">媒体播放</string>
     <string name="pick_video">选择视频</string>
     <string name="notification_playing">正在播放</string>
-    <string name="repeat_mode_list">列表</string>
-    <string name="repeat_mode_one">单曲</string>
-    <string name="repeat_mode_shuffle">随机</string>
     <string name="error_playback_failed">视频无法播放，可能已被移动或删除</string>
-    <string name="retry_pick_video">重新选择</string>
+    <string name="retry_pick_video">返回并重新选择</string>
+
+    <string name="tab_library">本地库</string>
+    <string name="tab_playlists">歌单</string>
+    <string name="tab_settings">设置</string>
+    <string name="screen_library_title">本地库</string>
+    <string name="screen_playlists_title">我的歌单</string>
+    <string name="screen_settings_title">设置</string>
+    <string name="search_videos_hint">搜索视频…</string>
+    <string name="library_recent_count">共 %1$d 个视频</string>
+    <string name="no_playlists_create_first">暂无歌单，请先在歌单页创建</string>
+    <string name="playlist_track_count">%1$d 首曲目</string>
+    <string name="dialog_new_playlist_title">新建歌单</string>
+    <string name="dialog_new_playlist_hint">歌单名称</string>
+    <string name="default_playlist_name">新歌单</string>
+    <string name="action_create">创建</string>
+    <string name="action_cancel">取消</string>
+    <string name="play_all">播放全部</string>
+    <string name="playlist_play_sequential">顺序</string>
+    <string name="playlist_play_shuffle">随机</string>
+    <string name="playlist_play_mode_subtitle">列表循环：顺序或随机二选一</string>
+    <string name="settings_version_label">版本</string>
+    <string name="settings_about_storage">存储</string>
+    <string name="settings_storage_hint">媒体与歌单数据均保存在本机，可稍后在文件管理中清理缓存。</string>
+
+    <string name="player_connecting">正在连接播放器…</string>
+    <string name="now_playing">正在播放</string>
+    <string name="now_playing_badge">NOW PLAYING</string>
+    <string name="cd_repeat_toggle">切换单曲循环或列表顺序循环</string>
+    <string name="player_repeat_list_chip">列表循环</string>
+    <string name="player_repeat_one_chip">单曲循环</string>
+
+    <string name="cd_scan">扫描</string>
+    <string name="cd_more">更多</string>
+    <string name="cd_back">返回</string>
+    <string name="cd_play_pause">播放或暂停</string>
+    <string name="cd_next">下一首</string>
+    <string name="cd_previous">上一首</string>
+    <string name="cd_new_playlist">新建歌单</string>
+    <string name="cd_add_videos">添加视频</string>
+    <string name="cd_remove">移除</string>
+    <string name="cd_open_fullscreen_player">全屏播放</string>
+    <string name="cd_play_in_mini_player">在底部播放器播放</string>
+
+    <string name="sheet_more_options_title">更多选项</string>
+    <string name="sheet_add_to_playlist">添加到歌单</string>
+    <string name="sheet_add_favorite">添加到我喜欢的</string>
+    <string name="sheet_remove_favorite">取消喜欢</string>
+    <string name="sheet_ignore_video">忽略</string>
+    <string name="sheet_new_playlist">新建歌单</string>
 </resources>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>我的歌单 - 音乐应用</title>
+<!-- Tailwind CSS v3 CDN with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Font Configuration (Optional Inter-like font) -->
+<style data-purpose="typography">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+<style data-purpose="layout-styles">
+    /* Custom scrollbar hiding for clean UI */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Collage grid specifically for playlist covers */
+    .playlist-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 1px;
+    }
+  </style>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/></head>
+<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col pb-24">
+<!-- BEGIN: MainHeader -->
+<header class="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-gray-100 px-4 pt-12 pb-4" data-purpose="app-bar">
+<div class="flex justify-between items-center">
+<h1 class="text-3xl font-bold tracking-tight">我的歌单</h1>
+<button aria-label="搜索" class="p-2 text-gray-500 hover:text-blue-600 transition-colors">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: PlaylistGridContent -->
+<main class="flex-grow px-4 py-6" data-purpose="playlist-container">
+<div class="grid grid-cols-2 gap-x-4 gap-y-8">
+<!-- Playlist Item: Study List -->
+<article class="flex flex-col gap-2" data-purpose="playlist-card">
+<div class="relative aspect-square rounded-2xl overflow-hidden bg-gray-200 shadow-sm playlist-grid">
+<!-- Collage Thumbnails -->
+<img alt="Study cover 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARTqymPcaW14DLWW3pxEDkakwmglUiKVX_VdF5Ahi3pDt6UIpIuezOtOLkSLgQaoHM5xWbVesn5iYVmry3FJ4xIRRvAFiZTfiwIclhtJo5LBbEeUXpRzJRtP09lZi1AY_dKQkGwy7Zh17Kr5HlLjocf5TTD7Sc6HlZ-3CXdDqv88By_abqBqDHOMoFKTM9q8khuFRCFRHP6Dl-K03LvM56QLKwYlpWPL81KGVWEFPSYNyOqd2JOhA7hH1kM-jD5N2xCEAPpYX2kGc"/>
+<img alt="Study cover 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAT_e0fVcgOpzs99wIg4j6lcrlYImsupFgAJxl_NTrNtIuMal-ErFf9iUgO3QISlSRLBzuri6oU5lhIP_XLIDH_Qskn1kyg0ciJhSqbY-30w_twRD4IQnOD0zmy8QnFTvZcKSLqJHLQnasPoshO4g_OWXFOiSLFXUgaSs0iaW_2owqhkfJkqkKcIbAqXSc3z9HttbVAqU_a2_lZ2vZFD8Og6MKUpsOhd5LX4xIQDEWF4-TdFHQS9nopoxMqYLmUsG9mH1UDup25EYI"/>
+<img alt="Study cover 3" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBs70bs3PAnZrmL0CWjT5nZAw2oqnqmP3Zbz2oPRnOjwE7dfiRiLetIi1-WzRzyE_dsvHEjPKrZnzWG2peJmMkCffFFP0wFwEcxAlB_d8C3lziTkFBHJ1H5ItAYDoau2S5_YsPBOLB6yY-RtwX9fnDWPRY4J-hdN4xzw7lSORyZ2T9Tus699w-eeSxRpJiqBqkStRBmMXuJSrwtXnM1geMOw7TJrcezCXJ4_XhneCOStt0LcE_Aei3wYLaFRjWVGTa3Yyje5HxUUFE"/>
+<img alt="Study cover 4" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzuHIuIjPmYE3O70wM4ubd9xqKEagJlpyFBogABaH3n6YyutoklAvaRJh8-dFXdLpi9JdcgK55S8fq7Qon0mcRFwlKn0Eeoq1wuHzQr-5eLB9f03o4qr3A0H9Bi3YQOQVC3orpIKGOscOYlS_F9ES5j2ZwIOtOGo5ijEm3_T5bM0E-SLHJzVwxAt896GMT30RKr1776W7W8AzYc-UlwyHtYmyk_sPi8kTZuc0fZ7icE1nsaWUbZfOqBZ9BRy-YnapNk32_dzuOSDg"/>
+</div>
+<div class="mt-1">
+<h2 class="font-semibold text-base truncate">学习列表</h2>
+<p class="text-sm text-gray-500">42 首曲目</p>
+</div>
+</article>
+<!-- Playlist Item: Workout Mix -->
+<article class="flex flex-col gap-2" data-purpose="playlist-card">
+<div class="relative aspect-square rounded-2xl overflow-hidden bg-gray-200 shadow-sm playlist-grid">
+<img alt="Workout cover 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCq7wytq1ahdQibusOYkpJVRc-OGfZj3y4VP3cBS7G3NsZLQ3IDM4P8px1awpceKC3dEHTcaR9iDitXit0JW01yc7pZcvQmQxjYAT7K5ofFFOso6kxfD2IKmzFe7pApAm_NPABDN1orTmWyOr1X4J5_7OVuZfS3vmbsdWo95W0ZJsochyxxQm4frz226HUL8L4sOKihtTrCMre2xbN2jh6otHJklKJFqfa8eQZX8i0w7VMcTuJkpPB6eWxBD5_EUDPfoxzB12ygKls"/>
+<img alt="Workout cover 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1MTpBvHev3l8ERabmCdzy9w9biQ_58cKMlFEvv3xqX5j37R8ZqJLKlLXJiCjruXXal5_8qXWX9NLsYJZKI40ypBjKAnAlbPoBml9tlerxzEo6vz3Xp-6_yEpY8o7eu3Nm3Rh62z0NX3IJNzmFcZ3544_qWyEllKK-aGEA2VTCQrrmLo1Q7Jg3J7BRdC4lPTQ8ijIsQpfR6Seei7wU6A7bEisiOPmwW9OPF8NCKOjw4jNsFaRMNZN-8Jbl5geaphFF0ynxTCLXlDQ"/>
+<img alt="Workout cover 3" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7gAZZuRSWpiHZ3QOvYGJadkD73G0sYC34wPGoI_Vbg8spB4OQ6WIQNDPX82gB1tMbNVBKglNuXXVhkOmEGnPcXnSoEhLRruajj7bX9UN5pOY9mC5k0YBlMEDUSKGI8DsKL-fcJ8HxpBOlSX0dl6AwsbNO22CwHtuRXYMoytL5XhR19v9wEpx38SZGJ8SkPgPCtbO2koZHZoSpr1V7AxLY2qJ9j4b9SJ3FBMagjp_KP67R0enBaf8w4krj1jbF2FyXOLR8KYgzlYE"/>
+<img alt="Workout cover 4" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDqAcUpMtSLH_VleRVSqj6jVblS66gt-hCCs66FX7csmX7dmiyS4AHfIN-_xJe8SN7UY_YJLTtqqyUoyMKHRfk5L_MZUObV-fSUYFmTHFC4t16CcWBf4H2VT1MJ_HKoctLI_B7Wl7u3fdyk7rwfsivFNKFXSxcT_Qux0Tmsvs5az1gC3UMj1OVWY423xhTWCgeLhoU2ntQqan19OwfVyKgbFPQwOcOt4k4GKxi0PFE6ZeqGKX5Rn031T5dVkDGtBwVuKM8HansWv0"/>
+</div>
+<div class="mt-1">
+<h2 class="font-semibold text-base truncate">运动混音</h2>
+<p class="text-sm text-gray-500">28 首曲目</p>
+</div>
+</article>
+<!-- Playlist Item: Chill Vibes -->
+<article class="flex flex-col gap-2" data-purpose="playlist-card">
+<div class="relative aspect-square rounded-2xl overflow-hidden bg-gray-200 shadow-sm playlist-grid">
+<img alt="Chill cover 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA52hBYD4zstrE9pqzZC7dNLv-RfqmJ6MNUHb9qM79OrfvToa9tb8e5L2DLNx0l4d412GhiZKpUxdKrp-NyrEQtvNFiZr_BRIAXu062otpNsdYRXHMfRUqlqAsAJvD4PF4SMbWKVSwtsv5PlzHizKX3aZui5miukn8V_r5oTMFBztLE1J1-Qw6ocaS8G3cdB-ndwgEfB8Y8F9BScXpRRFOPoYpAwpKdxloEAHVaeLdNGUfRXqMrvQe2OaB9H1e3131CJqnbs7HwVZc"/>
+<img alt="Chill cover 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPiFdSSp8NEYpimJsiNQ8-PEJnqc7cqO6hfT3hHNbJZIuxTwTTtfTIJIF_zkyEfYBilOm64gfpiBv1F_jWXdn9VDu2nxZTvslHfSuFYGrLZj-ujxNR_7O6v0oEqFdUFDdpPL6osj6wThJXVRdMDj0m4zLTONk-WhWScgIAzb4yveNaq-pbsFlAPwqc2hj2Dp5JR8HAuljnNbek66ttaq91EkYVszqOd_mcN0JbObEKid62unEyKdUMSwc7PPcFLuMoI0zUDN_aY44"/>
+<img alt="Chill cover 3" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMIupPaisTRIHU5pq2ZPBvkj1YbG23jJTvSL5UtvyPwjXTBICJWoFdanV5Og2ga9Qaztx_8NHQNpjnFw8mTQqmbytg78BFHMSFoa-HrH8swiTwS158rMSRg9FTxZlI_7CcPkaDIV7f71xhu2eYhKkDX5sx-JGzSGFq1R9e5zXcEkSymA6a3W49KlJ8HL1jfNH7yNithEL9PY4O7hjCktJQ79Ck1sBXljaXVLUOJ5I0GYIWjni7y0fgcFAS7f9PhHsfxxV3ii1USU8"/>
+<img alt="Chill cover 4" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdTyVewiJZquKX3Fc-WncB4zYZEQGByVqocL0udRuAKz-O-SQozfR94OSl6ED6iJmerq0H4qsYUyj3v85kgka84VcbXclX1q1D1lUi1NOmt0-mdwV0eV3-Bik9OT5h89zoafDGl3crVUjMowbS4N1Uj3FovQCyTs7khbwiqOsewmvPbx22hpXtoVbEYe8wgfV-Y_5U1Eqi3BCfoWDwFxEzEoMd35myKFb1XT2bDdnJTKBYho64alb_m8aI962BH1MSdXGt-x5rmls"/>
+</div>
+<div class="mt-1">
+<h2 class="font-semibold text-base truncate">放松心情</h2>
+<p class="text-sm text-gray-500">115 首曲目</p>
+</div>
+</article>
+<!-- Playlist Item: Road Trip 2024 -->
+<article class="flex flex-col gap-2" data-purpose="playlist-card">
+<div class="relative aspect-square rounded-2xl overflow-hidden bg-gray-200 shadow-sm playlist-grid">
+<img alt="Road trip cover 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8ACSHWlf6JVs_p1lKkxEcITA0FfuKVV10gBLyA7xZGz_aXzzCPDQ9V1EFAG4acvzbd3WnNpFY7OkfJzO1kYh1tP9rDCdWpzP4wimvqlTzlipFm4Uu-bxzXqXQZ0q8LJYaKuLzv48vKYSkICGQ4nAIlkLm0kXlobTwDWaqtrNDJg8XNeH-avUgWLf5Wgg8XL1YU9tTCUguIsO9aj3sflEOkdhXj5qlr6auLBKasTSO3TbyZ7YB3trtc6RtemZWAKd6P8xUS9zMAzk"/>
+<img alt="Road trip cover 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVi8l7LHRrMiXA65MJsH2LRBPI4Hi_1ueuZgTWtfyJ_OUAdnC5Q2vgAD-nnzNF5jwWMJEQzEuIWfr3OjqLWAql1lM5GKlh0Yf9wyiPcCQVRDstSAmZmrtrdkT6W4E-IIGevVY_xrv5cz4Hfd9vguV-4dt6o_q0Dj6kGyJac7CxlvVA2GSDrREzWYN8ay3nSS2CQ1RBiBrQhgcM_rWboDS7LIT79u35QPW7RTZEvcwnIxsxK3ogM8Ynm9oX5g4jlD7y0K0308cc0xc"/>
+<img alt="Road trip cover 3" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC312uLS6Qs94U4Y8C6So0Sbx225Lt_WipER13p1Jn-q4VwNBa01X6ynTQsrmWEYHCBHFSla-sYy30xAdVCh8Za9V8MPVAIZzFXhqdcjIVlS1WyK4TyBXJeiC0hA5PjGk14QU5EksbITZecJFPSLpmS6k6gMcgNB-0VG3o7j9NMtZHodMt42PRR8L_zo9V1A-zqkuuYE6j33BPg5X-xssHWAQEer2oK6esamjVuM31vQdDIRnFN847SN8FhS5FGXwPEB1rb1u8it20"/>
+<img alt="Road trip cover 4" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkedxCPFszXO-DRaevg7NPdyfQwsV7V5ZPvklVQuDs-eRTAk7X6fHS6QlUFP7d2uc7-lC4ZQ1GizF1xs2oK6381W0jEOjA-RTQMdowGXhv7r7hIEYq9-io4QwOM1L3xF1lINZSz5GfeTt1liMCCFa4LoooihaPV5mxVFZojoSAfS3qGfwIA943IA6eRyavs7xXEXtR44z4D8iFKiq7KIZ_fiF43VWfPhr4UaPas_8Z21RB6VVIM78SdQlaE02QaKs2CUqLJ7zI3kM"/>
+</div>
+<div class="mt-1">
+<h2 class="font-semibold text-base truncate">2024 公路旅行</h2>
+<p class="text-sm text-gray-500">56 首曲目</p>
+</div>
+</article>
+<!-- Playlist Item: Deep Focus -->
+<article class="flex flex-col gap-2" data-purpose="playlist-card">
+<div class="relative aspect-square rounded-2xl overflow-hidden bg-gray-200 shadow-sm playlist-grid">
+<img alt="Focus cover 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfGZTtpPmNiJpol1nThCHS_W0UDzu-N8TEM-XQ_K-tVufI5E7xGxUQmRi8lfrsl856EoQJ_mzNxg0oQorl-eYwX8NfsqHhnT5NXmsZCl2WSW7H-HZJp5NWYRtz-Sk78CsRCSC5MIrJnSFz_9p1MzXcXT7cJJdknMzneVyPQRHM0eascvyxmEFq8qKsWhO1BJdS6Ed5tDsN5hkCBLgLZoU1hpsbxcYEcSvExjWHAlafcGyTkVxQZhpM_U889EKiYe06GiWH5gRQTT8"/>
+<img alt="Focus cover 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBa1dCCj1FJuo91VqkvYjXMUvWDYKIquYmAL9MV_3Xox_MClHuMF2fpSoZ4urbZu2Vz_0uURpZBu9LLiT9F0KtAFbPqTdRuT-N_dYnN1YEqMlUNs_8-XeAzmlryzV-qrRD5JMbG2bOsi9whcmaiSD88t8I577VCOkvnGVos_tFuB4DLrYGl2JDALO0A9ScLLq-lwr8vcZrYTv0KVQF5BiLuC8WyLNW1pIjf0gARW7LR5xZSpXfJxOiLhzCLL4eZt_tIezdCN4un8H0"/>
+<img alt="Focus cover 3" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzM2Yr-iq7-yvFKlQf3DfedTWO6c9D2G19_31Cz7HEMW1CA6KPc6EbKYop2A9WMFUZmEY_MFIcxZI2ScA9LoQfd1dkXPPY0EvmecdSR7QLjL3XV_lVIhXkoxDoMhpPwJUcoY7cGXdd5l_F8zs6h-6Q46ECuVx3EBUMm4qFMX7-1OVBXYIUlIUYPVp2ZBJ77L0WlHIijNTZGRtnIoASh-7dvo9plGGNVDhOtszpDpduRy9ZdK2MJPHv0GMYGGz-zg3KuAwlhCfQsUc"/>
+<img alt="Focus cover 4" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfrOM6SCj5qbDsQrusv4BVkgOJjFVQ5On36tPGf1aLW_c6PuxMxRru3GZWrzkv3xaoZK6r8f3hwTr2iFtwswXYz9NWLmkIMofJq0xrZLUQyAXNIym4-O5mQWUDAYU2nxujZMo-WFMOnic7rovtEHmppoxiKvpx-3p2P7ptTB4DbIc0Zl0pnnO4NAKaNBIJhg2GGvePVyTryDXisKpiG3QWHHXbbxNQZBBai0NTC4iM46MrUyZOAh2KRWN1EKdHBEg816brwm1Xrqo"/>
+</div>
+<div class="mt-1">
+<h2 class="font-semibold text-base truncate">深度专注</h2>
+<p class="text-sm text-gray-500">19 首曲目</p>
+</div>
+</article>
+<!-- Playlist Item: Dinner Party -->
+<article class="flex flex-col gap-2" data-purpose="playlist-card">
+<div class="relative aspect-square rounded-2xl overflow-hidden bg-gray-200 shadow-sm playlist-grid">
+<img alt="Party cover 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxBr9DdTCuRrbBzvE-n34_fY6HXvTyo19w0ROH4x4Ro1GTK7cse-0MIIsHFsdDh3_dx6pd8Nkk6J3P0xQHka1bhpengGQf7JelrP3YUt67UyHYakygg4-B1QCpc0MQrhne2FLRF24Zz7dc67PnS1rFCIgznuUerTnbkLHHoG7RcEb6kwvJLX3lbNK-hcESK4toYnZJRAa4eWM4CbvcekaWZD79FYTdsfZ7YuAdfnGyZaWwYrNGVnlSbkS3vlaWwMN6WPFYG_wJbSg"/>
+<img alt="Party cover 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPEpEJekuOPUEOcBitrCYg3rdefZ3V-vxaHXT8a0U6xmP2ZiAS74m5QDoXCM01jWLqEXnC2KZZIQaNLCBS4PoAqjtEsTW5bMojLXB8N3nmYL2dPnzc6-u8yLlb4ODoi9p_Dvl1p8ndvdq8hXg64PACl_63AxGhpbtgQ4LEdgBbDPAugC4TLZ9zxKlQDCU_MK_fQtp4kJ3TPZ_3Z0VqzbioxybN1g-AY3O8aZRHWV-s7wGHTKFKAvbSOyTu7Oi1b516UqnFeL4zeGc"/>
+<img alt="Party cover 3" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkC59VBddIg91EpzHirrbFZiR1KBhhxjFtXTfIQd25fLs_6LWKEXxwtnWA29xr4TxyZAcHEsOAe8Kxt1retKm9VZNyzKOgo-48S-JAXrLTHPgOQEPUUjLwfq_M2UpkyfA_pAno83M8RMnIWjDFZFbQjYhP4LyvD0bXeFK6kJiN08-scSyBmfvv2fkGXHN-L81p2b2Vh3HbRFzPaLommG443cGn7mOkYut1BvBtPPLB_wUaViSyvJtU1U58cBEE9tnNDFB1c38d9Jg"/>
+<img alt="Party cover 4" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZrtRmKmdj6ihAcTnl7VzUX6NpKFxX6kowbDf7gXvd4sd2TEp3prS5dnN5aCeiNBabkHFnlZK4MNsI9_W6aTYIu6FGjzOxt4rEuxabYFkIr8VOaRKKj6yFGazCTbBy86WGljfNFL6wCbum_DLQTWBiInEkgCpFPT-MtvVbOMejBk-Qb07qxB8cneNbvL-ulqZuD9R743_B4WVgiQBL9mGOLmHeSmymqG9l1-sEDib8pPuX4n1rKWhpwWNIF-XbaLAzLZ2R4X0b0sA"/>
+</div>
+<div class="mt-1">
+<h2 class="font-semibold text-base truncate">晚餐派对</h2>
+<p class="text-sm text-gray-500">34 首曲目</p>
+</div>
+</article>
+</div>
+</main>
+<!-- END: PlaylistGridContent -->
+<!-- BEGIN: CreatePlaylistFAB -->
+<div class="fixed bottom-24 right-6 z-30">
+<button aria-label="创建新歌单" class="flex items-center justify-center w-14 h-14 bg-[#4f46e5] text-white rounded-full shadow-lg shadow-[#4f46e5]/20 hover:bg-[#4338ca] active:scale-95 transition-all duration-200" data-purpose="fab-create">
+<svg class="h-8 w-8" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<!-- END: CreatePlaylistFAB -->
+<!-- BEGIN: BottomNavigation -->
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-white/70 backdrop-blur-xl border-t border-gray-100 flex justify-around items-center py-3 px-6 pb-[env(safe-area-inset-bottom,20px)]" data-purpose="tab-bar">
+<button class="flex flex-col items-center justify-center p-2 text-gray-400 transition-all active:scale-90">
+<span class="material-symbols-outlined">video_library</span>
+<span class="text-[10px] font-semibold mt-1">本地库</span>
+</button>
+<button class="flex flex-col items-center justify-center p-2 text-[#4f46e5] transition-all active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">queue_music</span>
+<span class="text-[10px] font-bold mt-1">歌单</span>
+</button>
+<button class="flex flex-col items-center justify-center p-2 text-gray-400 transition-all active:scale-90">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-semibold mt-1">设置</span>
+</button>
+</nav>
+<!-- END: BottomNavigation -->
+</body></html>
