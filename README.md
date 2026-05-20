@@ -72,7 +72,7 @@ git clone https://github.com/MyTheKing/videoPlayer.git
 
 ## 许可证
 
-MIT License. 详见 [LICENSE](LICENSE)。
+GPL v3 License. 详见 [LICENSE](LICENSE)。
 
 ---
 
@@ -87,7 +87,7 @@ Please go to the Release page to download the corresponding installation package
 | Version | Feature | Link |
 |---------|---------|------|
 | Stable | Official version, high reliability, suitable for daily use. | [Release](https://github.com/MyTheKing/videoPlayer/releases) |
-| Direct Download | Download the latest version directly. | [Download APK](https://www.joshu.xin/download/VideoPlayer_v1.0.01.apk) |
+| Direct Download | Download the latest version directly. | [Download APK](http://www.joshu.xin/download/VideoPlayer_v1.0.01.apk) |
 
 Supports Android 7.0 (API 24) and above.
 
@@ -142,4 +142,4 @@ Issue and PR welcome!
 
 ### License
 
-MIT License. See [LICENSE](LICENSE) for details.
+GPL v3 License. See [LICENSE](LICENSE) for details.
