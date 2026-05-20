@@ -31,10 +31,53 @@
     <string name="playlist_play_mode_subtitle">列表循环：顺序或随机二选一</string>
     <string name="settings_version_label">版本</string>
     <string name="settings_about_storage">存储</string>
-    <string name="settings_storage_hint">媒体与歌单数据均保存在本机，可稍后在文件管理中清理缓存。</string>
+    <string name="settings_storage_hint">您的歌单、主题、偏好等数据以文件形式保存在设备公共存储目录中，清除缓存不会丢失。可在设置中查看和修改存储路径。</string>
+
+    <string name="settings_subtitle">个性化您的视听冥想体验</string>
+    <string name="settings_section_general">通用</string>
+    <string name="settings_theme">外观主题</string>
+    <string name="settings_language">语言</string>
+    <string name="settings_language_value">简体中文</string>
+    <string name="settings_section_scanning">文件扫描</string>
+    <string name="settings_filter_short">按时长过滤</string>
+    <string name="settings_duration_range">时长区间</string>
+    <string name="settings_duration_min">最小</string>
+    <string name="settings_duration_max">最大</string>
+    <string name="settings_duration_to">至</string>
+    <string name="settings_unit_seconds">秒</string>
+    <string name="settings_unit_minutes">分</string>
+    <string name="settings_unit_hours">时</string>
+    <string name="settings_section_timer">定时播放</string>
+    <string name="settings_timer_enabled">定时暂停</string>
+    <string name="settings_timer_duration">定时时间</string>
+    <string name="settings_timer_remaining">剩余 %1$s</string>
+    <string name="settings_timer_cancel">取消定时</string>
+    <string name="settings_section_privacy">隐私与安全</string>
+    <string name="settings_privacy_text_1">videoPlayer 高度重视您的隐私安全。本应用仅在本地读取并处理音视频文件，您的歌单、偏好等数据以 JSON 文件形式保存在设备公共存储目录中。</string>
+    <string name="settings_privacy_text_2">我们承诺不会修改您的原始文件，也不会上传或影响手机中的任何其他私密数据。所有数据文件均存储在您的设备上，清除应用缓存不会丢失。</string>
+    <string name="settings_privacy_text_3">本应用完全离线运行，无需联网即可使用所有功能，您的数据不会离开设备。数据文件仅在您手动删除时才会丢失。</string>
+    <string name="settings_section_feedback">提供建议</string>
+    <string name="settings_feedback_hint">您的反馈对我们至关重要。如果您有任何功能建议或遇到问题，请随时与我们联系。</string>
+    <string name="settings_feedback_note">邮件主题请包含「videoPlayer」，以便作者识别。</string>
+    <string name="settings_contact_author">联系作者</string>
+    <string name="settings_contact_email">wangy6993@gmail.com</string>
+    <string name="settings_contact_subject">videoPlayer 反馈</string>
+    <string name="settings_contact_body">你好，我对 videoPlayer 有一些建议：</string>
+    <string name="settings_section_about">关于</string>
+    <string name="settings_version_info">版本信息</string>
+    <string name="settings_legal">法律声明与协议</string>
+    <string name="settings_about_author">关于作者</string>
+    <string name="settings_footer_brand">Spiritual Resonance</string>
+
+    <string name="settings_section_storage">数据存储</string>
+    <string name="settings_storage_location">存储位置</string>
+    <string name="settings_storage_default">默认（内部存储）</string>
+    <string name="settings_storage_moved">存储位置已更改，数据已迁移</string>
+    <string name="settings_storage_move_failed">迁移失败，已保留原路径</string>
 
     <string name="player_connecting">正在连接播放器…</string>
     <string name="now_playing">正在播放</string>
+    <string name="lyrics_placeholder">目前不支持歌词</string>
     <string name="now_playing_badge">NOW PLAYING</string>
     <string name="cd_repeat_toggle">切换单曲循环或列表顺序循环</string>
     <string name="player_repeat_list_chip">列表循环</string>
@@ -48,6 +91,7 @@
     <string name="cd_previous">上一首</string>
     <string name="cd_new_playlist">新建歌单</string>
     <string name="cd_add_videos">添加视频</string>
+    <string name="cd_select_items">多选</string>
     <string name="cd_remove">移除</string>
     <string name="cd_open_fullscreen_player">全屏播放</string>
     <string name="cd_play_in_mini_player">在底部播放器播放</string>
@@ -57,5 +101,126 @@
     <string name="sheet_add_favorite">添加到我喜欢的</string>
     <string name="sheet_remove_favorite">取消喜欢</string>
     <string name="sheet_ignore_video">忽略</string>
+    <string name="sheet_remove_from_playlist">从歌单中移除</string>
     <string name="sheet_new_playlist">新建歌单</string>
+
+    <string name="playlist_cover_dialog_title">歌单封面</string>
+    <string name="playlist_cover_dialog_hint">长按歌单卡片可更换展示图（「喜欢」歌单除外）。未设置时使用歌单内第一个视频的缩略图；若歌单为空则为柔和渐变。</string>
+    <string name="playlist_cover_pick_image">选取展示图</string>
+    <string name="playlist_cover_clear_custom">恢复默认封面</string>
+    <string name="cd_playlist_liked_artwork">我喜欢的歌单</string>
+
+    <string name="playlist_context_title">歌单操作</string>
+    <string name="playlist_context_cover">选取封面图</string>
+    <string name="playlist_context_rename">重命名</string>
+    <string name="playlist_context_delete">删除歌单</string>
+    <string name="playlist_rename_title">重命名歌单</string>
+    <string name="playlist_rename_hint">输入新名称</string>
+    <string name="playlist_delete_confirm_title">删除歌单</string>
+    <string name="playlist_delete_confirm_message">确定要删除「%1$s」吗？此操作无法撤销。</string>
+    <string name="action_delete">删除</string>
+    <string name="selection_count">已选 %1$d 个</string>
+    <string name="delete_playlists_confirm_title">批量删除</string>
+    <string name="delete_playlists_confirm_message">确定要删除选中的 %1$d 个歌单吗？此操作无法撤销。</string>
+    <string name="delete_playlist_items_confirm_title">批量移除</string>
+    <string name="delete_playlist_items_confirm_message">确定要从歌单中移除选中的 %1$d 首歌曲吗？</string>
+    <string name="cd_exit_selection">退出选择</string>
+
+    <string name="legal_title">法律声明与协议</string>
+    <string name="legal_section_disclaimer">免责声明</string>
+    <string name="legal_disclaimer_content">本应用（videoPlayer）是一款纯粹的本地视频播放工具，仅用于读取和播放用户设备上已存储的音视频文件。\n\n本应用不提供任何内容的下载、上传、分发、推荐或在线搜索服务，不连接互联网，不具备任何联网功能。\n\n用户通过本应用播放的所有音视频内容，其来源、版权及合法性均由用户自行负责。本应用的开发者不对用户播放的任何内容承担版权责任。</string>
+    <string name="legal_section_data">数据丢失与清除声明</string>
+    <string name="legal_data_content">本应用的用户数据（包括歌单、收藏记录、播放偏好、主题设置等）以 JSON 文件形式保存在设备公共存储目录中（默认路径：/sdcard/Documents/VideoPlayerData/）。该目录不会因清除应用缓存或卸载重装而自动删除。\n\n以下情况可能导致数据文件丢失：\n\n• 用户手动删除存储目录中的文件\n• 设备恢复出厂设置\n• 存储卡损坏或格式化\n• 任何第三方文件管理工具的删除操作\n\n建议用户定期检查存储目录，重要数据可自行备份。</string>
+    <string name="legal_section_liability">责任限制</string>
+    <string name="legal_liability_content">在法律允许的最大范围内，本应用的开发者不对因使用或无法使用本应用而产生的任何直接、间接、偶然、特殊或后果性损害承担责任，包括但不限于数据丢失、业务中断或设备损坏。</string>
+    <string name="legal_section_agreement">用户协议</string>
+    <string name="legal_agreement_content">下载、安装或使用本应用，即表示您已阅读、理解并同意接受本声明的全部条款。如您不同意本声明的任何内容，请立即停止使用本应用并将其卸载。</string>
+    <string name="legal_effective_date">生效日期：2026年5月18日</string>
+
+    <string name="legal_section_author">关于作者</string>
+    <string name="legal_author_content">做这个 App 的初衷很简单——我下载了很多 MV 视频资源，却没法像听歌一样随时随地享受它们。\n\n每天坐地铁、走路的时候，时间很无聊，手头只有这些 MV，但它们是"视频"，不是"音乐"。我希望能像听歌一样，关掉屏幕、塞上耳机，就能沉浸在旋律里。\n\n于是就有了 videoPlayer。它把视频当成音频来播，让你可以在任何场景下"听"MV，而不是必须"看"MV。\n\n如果你和我一样，有大量 MV 资源却苦于无法当歌来听，希望这个 App 能帮到你。</string>
+    <string name="legal_author_signature">—— 作者 Joshua Wang</string>
+
+    <string name="author_creator_label">CREATOR OF VIDEOPLAYER</string>
+    <string name="author_section_why_title">我为什么做这款app</string>
+    <string name="author_section_why_body">做这款 App 的初衷很简单，就是为了解决一个困扰我很久的问题。</string>
+    <string name="author_section_story_body">我下载了很多 MV 视频资源，却没法像听歌一样随时随地享受它们。每天坐地铁、走路的时候，时间很无聊，手头只有这些 MV，但它们是"视频"，不是"音乐"。</string>
+    <string name="author_section_solution_body">我希望能像听歌一样，关掉屏幕、塞上耳机，就能沉浸在旋律里。于是就有了 videoPlayer。它把视频当成音频来播，让你可以在任何场景下"听"MV，而不是必须"看"MV。</string>
+    <string name="author_quote">"如果你和我一样，有大量 MV 资源却苦于无法当歌来听，希望这个 App 能帮到你。"</string>
+    <string name="author_pure_title">纯粹初衷</string>
+    <string name="author_free_note">本应用完全免费，不做任何商用，仅供有同样需求的朋友使用。</string>
+    <string name="author_free_badge">Free &amp; Non-commercial</string>
+
+    <string name="splash_skip">%1$d s 跳过</string>
+    <string name="splash_tagline_zh">你从哪里来，要到哪里去</string>
+    <string name="splash_tagline_en">Where do you come from, and where are you going?</string>
+
+    <!-- SettingsScreen hardcoded strings -->
+    <string name="settings_storage_permission_needed">需要「所有文件访问权限」才能写入数据文件，点击授权</string>
+    <string name="settings_storage_permission_granted">已获得文件访问权限，数据文件可正常读写</string>
+    <string name="settings_storage_location_title">存储位置</string>
+    <string name="settings_storage_path_hint">输入文件夹路径，App 会在该目录下读写数据文件</string>
+    <string name="settings_storage_path_default">默认：/sdcard/Documents/VideoPlayerData/</string>
+    <string name="settings_storage_path_empty">路径不能为空</string>
+    <string name="settings_storage_path_create_failed">无法创建该目录，请检查路径</string>
+    <string name="action_confirm">确定</string>
+    <string name="settings_privacy_local_processing">本地处理</string>
+    <string name="settings_privacy_local_processing_desc">您的数据完全在设备上处理</string>
+    <string name="settings_feedback_help_improve">帮助改进</string>
+    <string name="settings_feedback_opinion_matters">您的意见很重要</string>
+    <string name="cd_edit_path">修改路径</string>
+
+    <!-- AppHomeScreen hardcoded strings -->
+    <string name="press_back_again_to_exit">再按一次返回桌面</string>
+    <string name="storage_permission_title">开启存储权限</string>
+    <string name="storage_permission_message">为防止卸载或清除缓存后丢失歌单、收藏等数据，本应用需要「所有文件访问权限」将数据保存到公共存储目录。</string>
+    <string name="storage_permission_instruction">点击「去授权」将在系统设置中打开该权限。</string>
+    <string name="storage_permission_grant">去授权</string>
+    <string name="storage_permission_later">稍后再说</string>
+
+    <!-- ThemeColorPicker hardcoded strings -->
+    <string name="cd_collapse">收起</string>
+    <string name="cd_expand">展开</string>
+    <string name="theme_preset_colors">预设颜色</string>
+    <string name="theme_custom_color">自定义颜色</string>
+    <string name="theme_input_color_value">输入颜色值</string>
+    <string name="theme_color_format_hint">支持格式: #RGB, #RRGGBB, #AARRGGBB, #RRGGBBAA</string>
+    <string name="theme_invalid_color">无效的颜色值</string>
+    <string name="action_apply">应用</string>
+
+    <!-- PlayerContent hardcoded strings -->
+    <string name="player_lyrics_label">词</string>
+
+    <!-- PlaylistRepository hardcoded strings -->
+    <string name="default_unnamed_playlist">未命名歌单</string>
+    <string name="system_playlist_liked">喜欢</string>
+    <string name="system_playlist_ignored">忽略</string>
+
+    <!-- ThemeColorManager preset names -->
+    <string name="theme_preset_purple">紫色</string>
+    <string name="theme_preset_blue">蓝色</string>
+    <string name="theme_preset_green">绿色</string>
+    <string name="theme_preset_red">红色</string>
+    <string name="theme_preset_orange">橙色</string>
+    <string name="theme_preset_cyan">青色</string>
+    <string name="theme_preset_black">黑色</string>
+    <string name="theme_preset_custom">自定义</string>
+
+    <!-- Language selection -->
+    <string name="language_english">English</string>
+    <string name="language_chinese">简体中文</string>
+
+    <!-- Legal agreement dialog -->
+    <string name="legal_agreement_dialog_title">法律协议确认</string>
+    <string name="legal_agreement_dialog_message">请先阅读并同意法律声明与协议</string>
+    <string name="legal_agreement_dialog_confirm">去阅读</string>
+    <string name="legal_agreement_dialog_cancel">取消</string>
+
+    <!-- Continue playback -->
+    <string name="continue_playback">继续播放</string>
+
+    <!-- Playback error toast -->
+    <string name="toast_file_not_found">文件不存在，已自动播放下一首</string>
+    <string name="toast_io_read_error">文件读取异常，已自动播放下一首</string>
+    <string name="toast_file_not_playable">文件无法播放</string>
 </resources>
