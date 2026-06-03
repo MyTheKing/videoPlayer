@@ -13,8 +13,8 @@ android {
         applicationId = "com.joshua.videoplayer"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1001
-        versionName = "1.0.01"
+        versionCode = 1002
+        versionName = "1.0.02"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,7 +41,7 @@ android {
         val vName = versionName
         outputs.configureEach {
             val out = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
-            out.outputFileName = "videoPlayer_v${vName}.apk"
+            out.outputFileName = "VideoPlayer_v${vName}.apk"
         }
     }
 }

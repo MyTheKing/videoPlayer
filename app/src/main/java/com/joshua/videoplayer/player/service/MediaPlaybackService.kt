@@ -18,13 +18,13 @@ import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.SeekParameters
 import androidx.media3.session.DefaultMediaNotificationProvider
+import androidx.media3.session.MediaController
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 import com.joshua.videoplayer.MainActivity
 import com.joshua.videoplayer.R
 import com.joshua.videoplayer.data.PlaybackCacheManager
 import com.joshua.videoplayer.ui.media.loadVideoThumbnail
-import com.joshua.videoplayer.ui.theme.ThemeColorManager
 import java.io.ByteArrayOutputStream
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,10 +39,10 @@ import kotlinx.coroutines.withContext
  *
  * 通知样式由 [DefaultMediaNotificationProvider] 生成，贴近系统媒体控件（参考 stitch 媒体通知稿）。
  */
-@OptIn(androidx.media3.common.util.UnstableApi::class)
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 class MediaPlaybackService : MediaSessionService() {
 
-    /** 真实 Exo 实例，仅用于 [release]（外层 [MetadataDurationSeekableForwardingPlayer] 不负责释放）。 */
+    /** 真实 Exo 实例，仅用于 [onDestroy] 中释放（外层 [MetadataDurationSeekableForwardingPlayer] 不负责释放）。 */
     private var exoPlayer: ExoPlayer? = null
     /** 交给 [MediaSession] 与 [onStartCommand] 的 [Player]（含时长/seek 能力修补）。 */
     private var sessionPlayer: Player? = null
@@ -58,6 +58,23 @@ class MediaPlaybackService : MediaSessionService() {
             scheduleArtworkForCurrentItem(p)
             // 更新缓存中的当前播放索引
             PlaybackCacheManager.updateCurrentIndex(p.currentMediaItemIndex)
+
+            // 检查是否需要跳过当前视频（已被忽略或从歌单移除）
+            val currentUri = mediaItem?.localConfiguration?.uri?.toString()
+            if (currentUri != null && com.joshua.videoplayer.playback.PlaybackSkipManager.shouldSkip(currentUri)) {
+                android.util.Log.d("MediaPlaybackService", "跳过已移除的视频: $currentUri")
+                com.joshua.videoplayer.playback.PlaybackSkipManager.removeSkipped(currentUri)
+
+                // 延迟一下再跳，避免快速切换导致的问题
+                android.os.Handler(mainLooper).postDelayed({
+                    if (p.hasNextMediaItem()) {
+                        p.seekToNext()
+                    } else if (p.mediaItemCount > 1) {
+                        // 没有下一首，但队列不为空，跳到第一首
+                        p.seekTo(0, 0)
+                    }
+                }, 100)
+            }
         }
 
         override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
@@ -103,7 +120,7 @@ class MediaPlaybackService : MediaSessionService() {
                     }
 
                     // 检查播放状态 - 如果已经在播放中且有进度，说明恢复了
-                    if (player.playbackState == androidx.media3.common.Player.STATE_READY && player.isPlaying) {
+                    if (player.playbackState == Player.STATE_READY && player.isPlaying) {
                         android.util.Log.d("MediaPlaybackService", "播放已恢复，跳过错误处理")
                         return@postDelayed
                     }
@@ -331,7 +348,7 @@ class MediaPlaybackService : MediaSessionService() {
         ) {
             val durs = when {
                 durationMs.size == uriStrings.size -> durationMs.map { it.coerceAtLeast(0L) }.toLongArray()
-                else -> LongArray(uriStrings.size) { 0L }
+                else -> LongArray(uriStrings.size)
             }
             val i = Intent(context, MediaPlaybackService::class.java).apply {
                 action = ACTION_PLAY_QUEUE

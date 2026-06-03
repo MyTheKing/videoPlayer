@@ -1,3 +1,5 @@
+@file:OptIn(androidx.media3.common.util.UnstableApi::class)
+
 package com.joshua.videoplayer.player.ui
 
 import android.app.Activity
@@ -10,6 +12,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -59,6 +62,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -94,6 +98,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.math.abs
+
+/**
+ * 快进/快退反馈数据
+ */
+private data class SeekFeedback(
+    val isForward: Boolean,
+    val seconds: Int,
+)
 
 /**
  * 全屏播放页（深色沉浸风格）。
@@ -340,6 +352,11 @@ private fun LandscapeLayout(
     onToggleControls: () -> Unit,
     playerViewHolder: androidx.compose.runtime.MutableState<PlayerView?>,
 ) {
+    // 双击反馈状态
+    var seekFeedback by remember { mutableStateOf<SeekFeedback?>(null) }
+    var seekFeedbackJob by remember { mutableStateOf<Job?>(null) }
+    val scope = rememberCoroutineScope()
+
     Box(Modifier.fillMaxSize()) {
         // 视频铺满
         AndroidView(
@@ -362,8 +379,9 @@ private fun LandscapeLayout(
             },
         )
 
-        // 视频区域点击：控件显示时点击隐藏，控件隐藏时点击显示（由外层 Box 的 clickable 处理）
+        // 视频区域点击处理
         if (controlsVisible) {
+            // 控件显示时，单击隐藏控件
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -372,6 +390,73 @@ private fun LandscapeLayout(
                         interactionSource = remember { MutableInteractionSource() },
                     ) { onToggleControls() },
             )
+        } else {
+            // 控件隐藏时，双击快进/快退，单击显示控件
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .pointerInput(controller) {
+                        detectTapGestures(
+                            onTap = {
+                                // 单击显示控件
+                                onToggleControls()
+                            },
+                            onDoubleTap = { offset ->
+                                val screenWidth = size.width.toFloat()
+                                val isLeftSide = offset.x < screenWidth / 2
+                                val currentPosition = controller.currentPosition
+                                val duration = controller.duration
+
+                                if (isLeftSide) {
+                                    // 双击左侧：后退3秒
+                                    val newPosition = (currentPosition - 3000).coerceAtLeast(0)
+                                    controller.seekTo(newPosition)
+                                    seekFeedback = SeekFeedback(false, 3)
+                                } else {
+                                    // 双击右侧：前进3秒
+                                    val maxPosition = if (duration > 0 && duration != C.TIME_UNSET) duration else currentPosition + 3000
+                                    val newPosition = (currentPosition + 3000).coerceAtMost(maxPosition)
+                                    controller.seekTo(newPosition)
+                                    seekFeedback = SeekFeedback(true, 3)
+                                }
+
+                                // 显示反馈动画
+                                seekFeedbackJob?.cancel()
+                                seekFeedbackJob = scope.launch {
+                                    delay(800)
+                                    seekFeedback = null
+                                }
+                            }
+                        )
+                    },
+            )
+        }
+
+        // 双击反馈动画
+        seekFeedback?.let { feedback ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 100.dp),
+                contentAlignment = if (feedback.isForward) Alignment.CenterEnd else Alignment.CenterStart,
+            ) {
+                Box(
+                    modifier = Modifier
+                        .padding(horizontal = 40.dp)
+                        .background(
+                            Color.Black.copy(alpha = 0.6f),
+                            RoundedCornerShape(8.dp)
+                        )
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                ) {
+                    Text(
+                        text = "${if (feedback.isForward) "⏩" else "⏪"} ${feedback.seconds}秒",
+                        color = PlayerOnSurface,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium,
+                    )
+                }
+            }
         }
 
         // 顶部：返回 + 标题（左上角叠加）

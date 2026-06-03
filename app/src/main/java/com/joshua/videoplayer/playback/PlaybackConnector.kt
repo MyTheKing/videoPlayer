@@ -27,7 +27,7 @@ fun PlaybackConnector(viewModel: MainPlaybackViewModel) {
     val generation by viewModel.sessionGeneration.collectAsStateWithLifecycle()
     val latestVm = rememberUpdatedState(viewModel)
 
-    LaunchedEffect(request, generation) {
+    LaunchedEffect(generation) {
         val req = request ?: return@LaunchedEffect
         val shouldPause = latestVm.value._pauseAfterRestore
         latestVm.value._pauseAfterRestore = false

@@ -1,17 +1,23 @@
 package com.joshua.videoplayer.playback
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import com.joshua.videoplayer.data.PlaybackCacheManager
+import com.joshua.videoplayer.data.PlaylistRepository
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 /**
  * Activity 级播放状态：当前队列请求与已连接的 [MediaController]（供全屏播放器与迷你条共用）。
  */
-class MainPlaybackViewModel : ViewModel() {
+class MainPlaybackViewModel(
+    private val playlistRepository: PlaylistRepository,
+) : ViewModel() {
 
     data class PlaybackRequest(
         val uriStrings: List<String>,
@@ -45,6 +51,12 @@ class MainPlaybackViewModel : ViewModel() {
 
     /** 用户正在主动播放，不需要自动恢复缓存 */
     internal var userInitiatedPlay = false
+
+    /** 忽略列表同步任务 */
+    private var ignoredSyncJob: Job? = null
+
+    /** 歌单同步任务 */
+    private var playlistSyncJob: Job? = null
 
     fun playQueue(
         uriStrings: List<String>,
@@ -81,6 +93,9 @@ class MainPlaybackViewModel : ViewModel() {
             repeatMode = repeatMode,
             queueOrigin = queueOrigin,
         )
+
+        // 启动同步监听
+        startQueueSync(queueOrigin)
     }
 
     /**
@@ -101,6 +116,163 @@ class MainPlaybackViewModel : ViewModel() {
         _pauseAfterRestore = true
     }
 
+    /**
+     * 启动播放队列与数据源的同步监听
+     */
+    private fun startQueueSync(queueOrigin: PlaybackQueueOrigin) {
+        // 取消之前的同步任务
+        ignoredSyncJob?.cancel()
+        playlistSyncJob?.cancel()
+
+        // 1. 监听忽略列表变化
+        ignoredSyncJob = viewModelScope.launch {
+            playlistRepository.observeIgnoredContentUris().collect { ignoredUris ->
+                syncQueueWithIgnoredUris(ignoredUris)
+            }
+        }
+
+        // 2. 如果来源是歌单，监听歌单条目变化
+        if (queueOrigin is PlaybackQueueOrigin.UserPlaylist) {
+            playlistSyncJob = viewModelScope.launch {
+                playlistRepository.observePlaylistItems(queueOrigin.playlistId).collect { items ->
+                    syncQueueWithPlaylistItems(items.map { it.contentUri }.toSet())
+                }
+            }
+        }
+    }
+
+    /**
+     * 同步播放队列与忽略列表
+     */
+    private suspend fun syncQueueWithIgnoredUris(ignoredUris: Set<String>) {
+        val controller = _mediaController.value ?: return
+        val currentQueue = _playbackRequest.value ?: return
+        val currentIndex = controller.currentMediaItemIndex
+
+        // 找出需要移除的 URI（排除当前播放的）
+        val urisToRemove = currentQueue.uriStrings.filterIndexed { index, uri ->
+            uri in ignoredUris && index != currentIndex
+        }
+
+        if (urisToRemove.isEmpty()) {
+            // 即使没有需要移除的，也要检查当前播放的是否被忽略
+            val currentUri = currentQueue.uriStrings.getOrNull(currentIndex)
+            if (currentUri != null && currentUri in ignoredUris) {
+                PlaybackSkipManager.addSkipUri(currentUri)
+            }
+            return
+        }
+
+        // 标记当前播放的视频（如果被忽略）
+        val currentUri = currentQueue.uriStrings.getOrNull(currentIndex)
+        if (currentUri != null && currentUri in ignoredUris) {
+            PlaybackSkipManager.addSkipUri(currentUri)
+        }
+
+        // 从队列中移除（从后往前移除，避免索引偏移）
+        val indicesToRemove = urisToRemove.mapNotNull { uri ->
+            currentQueue.uriStrings.indexOf(uri).takeIf { it >= 0 }
+        }.sortedDescending()
+
+        for (index in indicesToRemove) {
+            controller.removeMediaItem(index)
+        }
+
+        // 更新 ViewModel 中的队列状态
+        updateQueueStateAfterRemoval(indicesToRemove, currentIndex)
+    }
+
+    /**
+     * 同步播放队列与歌单条目
+     */
+    private suspend fun syncQueueWithPlaylistItems(playlistUris: Set<String>) {
+        val controller = _mediaController.value ?: return
+        val currentQueue = _playbackRequest.value ?: return
+        val currentIndex = controller.currentMediaItemIndex
+
+        // 找出需要移除的 URI（不在歌单中的，排除当前播放的）
+        val urisToRemove = currentQueue.uriStrings.filterIndexed { index, uri ->
+            uri !in playlistUris && index != currentIndex
+        }
+
+        if (urisToRemove.isEmpty()) {
+            // 即使没有需要移除的，也要检查当前播放的是否已从歌单移除
+            val currentUri = currentQueue.uriStrings.getOrNull(currentIndex)
+            if (currentUri != null && currentUri !in playlistUris) {
+                PlaybackSkipManager.addSkipUri(currentUri)
+            }
+            return
+        }
+
+        // 标记当前播放的视频（如果已从歌单移除）
+        val currentUri = currentQueue.uriStrings.getOrNull(currentIndex)
+        if (currentUri != null && currentUri !in playlistUris) {
+            PlaybackSkipManager.addSkipUri(currentUri)
+        }
+
+        // 从队列中移除
+        val indicesToRemove = urisToRemove.mapNotNull { uri ->
+            currentQueue.uriStrings.indexOf(uri).takeIf { it >= 0 }
+        }.sortedDescending()
+
+        for (index in indicesToRemove) {
+            controller.removeMediaItem(index)
+        }
+
+        updateQueueStateAfterRemoval(indicesToRemove, currentIndex)
+    }
+
+    /**
+     * 移除后更新队列状态
+     */
+    private fun updateQueueStateAfterRemoval(removedIndices: List<Int>, currentIndex: Int) {
+        val request = _playbackRequest.value ?: return
+        val newUriStrings = request.uriStrings.filterIndexed { index, _ -> index !in removedIndices }
+        val newTitles = request.titles.filterIndexed { index, _ -> index !in removedIndices }
+        val newDurations = request.durationMsList.filterIndexed { index, _ -> index !in removedIndices }
+
+        // 计算新的当前索引
+        val removedBeforeCurrent = removedIndices.count { it < currentIndex }
+        val newCurrentIndex = (currentIndex - removedBeforeCurrent)
+            .coerceIn(0, (newUriStrings.size - 1).coerceAtLeast(0))
+
+        _playbackRequest.value = request.copy(
+            uriStrings = newUriStrings,
+            titles = newTitles,
+            durationMsList = newDurations,
+            startIndex = newCurrentIndex,
+        )
+
+        // 更新缓存
+        PlaybackCacheManager.savePlaybackState(
+            uriStrings = newUriStrings,
+            titles = newTitles,
+            durationMsList = newDurations,
+            shuffleEnabled = request.shuffleEnabled,
+            repeatMode = request.repeatMode,
+            queueOrigin = request.queueOrigin,
+        )
+
+        // 如果队列为空，停止播放
+        if (newUriStrings.isEmpty()) {
+            stopAndClearSession()
+        }
+    }
+
+    /**
+     * 检查指定 URI 是否应该被跳过
+     * 由 MediaPlaybackService 在 onMediaItemTransition 时调用
+     */
+    fun shouldSkipUri(uri: String): Boolean {
+        return PlaybackSkipManager.shouldSkip(uri)
+    }
+
+    /**
+     * 移除已跳过的 URI
+     */
+    fun removeSkippedUri(uri: String) {
+        PlaybackSkipManager.removeSkipped(uri)
+    }
 
     fun openFullPlayer() {
         _fullPlayerVisible.value = true
@@ -119,6 +291,13 @@ class MainPlaybackViewModel : ViewModel() {
         _fullPlayerVisible.value = false
         _mediaController.value?.release()
         _mediaController.value = null
+
+        // 清空跳过列表
+        PlaybackSkipManager.clear()
+
+        // 取消同步任务
+        ignoredSyncJob?.cancel()
+        playlistSyncJob?.cancel()
     }
 
     fun setMediaController(controller: MediaController?) {
@@ -129,6 +308,8 @@ class MainPlaybackViewModel : ViewModel() {
     override fun onCleared() {
         _mediaController.value?.release()
         _mediaController.value = null
+        ignoredSyncJob?.cancel()
+        playlistSyncJob?.cancel()
         super.onCleared()
     }
 }

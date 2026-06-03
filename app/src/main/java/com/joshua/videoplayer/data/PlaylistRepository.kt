@@ -10,6 +10,8 @@ import com.joshua.videoplayer.data.local.PlaylistWithCount
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -153,6 +155,18 @@ class PlaylistRepository(
     suspend fun getIgnoredContentUris(): Set<String> {
         val ignoredId = dao.getPlaylistIdByKind(PlaylistEntity.KIND_IGNORED) ?: return emptySet()
         return dao.snapshotItems(ignoredId).map { it.contentUri }.toSet()
+    }
+
+    /** 实时监听忽略歌单中的所有 contentUri */
+    fun observeIgnoredContentUris(): Flow<Set<String>> {
+        return flow {
+            val ignoredId = dao.getPlaylistIdByKind(PlaylistEntity.KIND_IGNORED)
+            if (ignoredId != null) {
+                emitAll(dao.observeItems(ignoredId).map { items -> items.map { it.contentUri }.toSet() })
+            } else {
+                emit(emptySet())
+            }
+        }
     }
 
     suspend fun createPlaylist(name: String): Long {

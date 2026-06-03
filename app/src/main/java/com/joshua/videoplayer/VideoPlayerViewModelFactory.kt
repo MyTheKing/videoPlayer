@@ -35,7 +35,7 @@ class VideoPlayerViewModelFactory(
             modelClass.isAssignableFrom(PlaylistViewModel::class.java) ->
                 PlaylistViewModel(playlistRepository, libraryVideoActionsRepository) as T
             modelClass.isAssignableFrom(MainPlaybackViewModel::class.java) ->
-                MainPlaybackViewModel() as T
+                MainPlaybackViewModel(playlistRepository) as T
             else -> throw IllegalArgumentException("Unknown ViewModel: ${modelClass.name}")
         }
     }
