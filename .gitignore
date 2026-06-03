@@ -13,3 +13,16 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# 图片文件 - 只允许 logo.png
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.webp
+!**/logo.png
+
+# 禁止上传的文件夹
+docs/
+BMAD/

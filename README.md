@@ -17,7 +17,7 @@
 | 版本 | 特征 | 链接 |
 |------|------|------|
 | Stable | 正式版，高可靠性，适合日常使用。 | [Release](https://github.com/MyTheKing/videoPlayer/releases) |
-| Direct Download | 直接下载最新版本。 | [下载 APK](http://www.joshu.xin/download/VideoPlayer_v1.0.01.apk) |
+| Direct Download | 直接下载最新版本。 | [下载 APK](http://www.joshu.xin/download/VideoPlayer_v1.0.02.apk) |
 
 支持 Android 7.0 (API 24) 及以上版本。
 
@@ -87,7 +87,7 @@ Please go to the Release page to download the corresponding installation package
 | Version | Feature | Link |
 |---------|---------|------|
 | Stable | Official version, high reliability, suitable for daily use. | [Release](https://github.com/MyTheKing/videoPlayer/releases) |
-| Direct Download | Download the latest version directly. | [Download APK](http://www.joshu.xin/download/VideoPlayer_v1.0.01.apk) |
+| Direct Download | Download the latest version directly. | [Download APK](http://www.joshu.xin/download/VideoPlayer_v1.0.02.apk) |
 
 Supports Android 7.0 (API 24) and above.
 
