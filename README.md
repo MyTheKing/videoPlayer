@@ -2,6 +2,8 @@
 
 一个基于 Jetpack Compose 的现代 Android 视频播放器。
 
+🌐 官网：[videoplayer.joshu.xin](http://videoplayer.joshu.xin/)
+
 语言：简体中文 · [English](#english)
 
 ## 预览
@@ -79,6 +81,8 @@ GPL v3 License. 详见 [LICENSE](LICENSE)。
 ## English
 
 A modern Android video player based on Jetpack Compose.
+
+🌐 Website: [videoplayer.joshu.xin](http://videoplayer.joshu.xin/)
 
 ### Installation
 
