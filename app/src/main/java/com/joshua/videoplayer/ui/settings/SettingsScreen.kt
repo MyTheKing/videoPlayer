@@ -903,6 +903,22 @@ fun SettingsScreen(
             )
             DividerLine()
             SettingsRow(
+                icon = Icons.Outlined.OpenInNew,
+                label = stringResource(R.string.settings_visit_website),
+                trailing = {
+                    Icon(
+                        Icons.AutoMirrored.Outlined.KeyboardArrowRight,
+                        contentDescription = null,
+                        tint = OutlineColor,
+                    )
+                },
+                onClick = {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://videoplayer.joshu.xin/"))
+                    context.startActivity(intent)
+                },
+            )
+            DividerLine()
+            SettingsRow(
                 icon = Icons.Outlined.Person,
                 label = stringResource(R.string.settings_about_author),
                 trailing = {
